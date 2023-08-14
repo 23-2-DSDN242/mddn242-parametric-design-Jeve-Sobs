@@ -53,18 +53,22 @@ function drawLetter(letterData) {
 
 function interpolate_letter(percent, oldObj, newObj) {
   let new_letter = {};
-  new_letter["shape1"]    = map(percent, 1, 100, oldObj["shape1"], newObj["shape1"]);
-  new_letter["offsetX1"] = map(percent, 0, 50, oldObj["offsetX1"], newObj["offsetX1"]);
-  new_letter["offsetY1"] = map(percent, 0, 50, oldObj["offsetY1"], newObj["offsetY1"]);
-  new_letter["shape2"]    = map(percent, 1, 100, oldObj["shape2"], newObj["shape2"]);
-  new_letter["offsetX2"] = map(percent, 0, 50, oldObj["offsetX2"], newObj["offsetX2"]);
-  new_letter["offsetY2"] = map(percent, 0, 50, oldObj["offsetY2"], newObj["offsetY2"]);
-  new_letter["shape3"]    = map(percent, 1, 100, oldObj["shape3"], newObj["shape3"]);
-  new_letter["offsetX3"] = map(percent, 0, 50, oldObj["offsetX3"], newObj["offsetX3"]);
-  new_letter["offsetY3"] = map(percent, 0, 50, oldObj["offsetY3"], newObj["offsetY3"]);
-  new_letter["shape4"]    = map(percent, 1, 100, oldObj["shape4"], newObj["shape4"]);
-  new_letter["offsetX4"] = map(percent, 0, 50, oldObj["offsetX4"], newObj["offsetX4"]);
-  new_letter["offsetY4"] = map(percent, 0, 50, oldObj["offsetY4"], newObj["offsetY4"]);
+  //new_letter["shape1"]    = map(percent, 1, 100, oldObj["shape1"], newObj["shape1"]);
+  new_letter["shape1"]    = newObj["shape1"];
+  new_letter["offsetX1"] = map(percent, 0, 100, oldObj["offsetX1"], newObj["offsetX1"]);
+  new_letter["offsetY1"] = map(percent, 0, 100, oldObj["offsetY1"], newObj["offsetY1"]);
+  //new_letter["shape2"]    = map(percent, 1, 100, oldObj["shape2"], newObj["shape2"]);
+  new_letter["shape2"]    = newObj["shape2"];
+  new_letter["offsetX2"] = map(percent, 0, 100, oldObj["offsetX2"], newObj["offsetX2"]);
+  new_letter["offsetY2"] = map(percent, 0, 100, oldObj["offsetY2"], newObj["offsetY2"]);
+  //new_letter["shape3"]    = map(percent, 1, 100, oldObj["shape3"], newObj["shape3"]);
+  new_letter["shape3"]    = newObj["shape3"];
+  new_letter["offsetX3"] = map(percent, 0, 100, oldObj["offsetX3"], newObj["offsetX3"]);
+  new_letter["offsetY3"] = map(percent, 0, 100, oldObj["offsetY3"], newObj["offsetY3"]);
+  //new_letter["shape4"]    = map(percent, 1, 100, oldObj["shape4"], newObj["shape4"]);
+  new_letter["shape4"]    = newObj["shape4"];
+  new_letter["offsetX4"] = map(percent, 0, 100, oldObj["offsetX4"], newObj["offsetX4"]);
+  new_letter["offsetY4"] = map(percent, 0, 100, oldObj["offsetY4"], newObj["offsetY4"]);
   //text(percent + interp,100,100);
   
   interpPercent = percent;
@@ -72,7 +76,7 @@ function interpolate_letter(percent, oldObj, newObj) {
 }
 
 function easeInCubic(t) {
-  return t * t *t * t * t *t * t * t *t * t * t *t;
+  return t * t *t * t ;
 }
 
 function drawShape(centreX, centreY, letter, posX, posY) {
@@ -81,12 +85,11 @@ function drawShape(centreX, centreY, letter, posX, posY) {
   let opacity = 255;
   let size_CONST = 90;
   if( interpPercent != 100){
-    let normalizedPercent = interpPercent / 100;
-    let easedPercent = easeInCubic(normalizedPercent);
-    size_CONST = map(easedPercent, 0, 1, 1, 90);
+    //let normalizedPercent = interpPercent / 100;
+    //let easedPercent = easeInCubic(normalizedPercent);
+    //size_CONST = map(easedPercent, 0, 1, 1, 90);
     //opacity = map(easedPercent, 0, 1, 1, 90);
   }
-  text(opacity,100,100);
   switch(sizeAndColour[1]){
       case 1:
           fill(99, 242, 255,opacity);
@@ -119,13 +122,13 @@ function drawShape(centreX, centreY, letter, posX, posY) {
         break;
 }
   
-  let h;
+  let s;
 
   switch (shape[0]) {
       case 0: // don't sraw shape 
         break;
       case 1: // Equilateral triangle pointing up
-          let s = (2 * size) / Math.sqrt(3);
+          s = (2 * size) / Math.sqrt(3);
           triangle(centreX + posX - s/2, centreY - posY , 
               centreX + posX + s/2, centreY - posY , 
               centreX + posX, centreY - posY - size);
@@ -135,7 +138,7 @@ function drawShape(centreX, centreY, letter, posX, posY) {
           s = (2 * size) / Math.sqrt(3);
           triangle(centreX + posX - s/2, centreY - posY - size, 
               centreX + posX + s/2, centreY - posY - size, 
-              centreX + posX, centreY - posY);
+              centreX + posX, centreY - posY );
         break;
 
       
@@ -184,7 +187,7 @@ function drawShape(centreX, centreY, letter, posX, posY) {
           break;
 
       case 11: // Semi Circle down
-          arc(centreX + posX, centreY + posY, size, size, PI, TWO_PI);
+          arc(centreX + posX, centreY - posY - size/2, size, size, TWO_PI, PI);
           break;
 
       case 12: // Rectangle 1:2 vertical
@@ -197,6 +200,10 @@ function drawShape(centreX, centreY, letter, posX, posY) {
 
       case 14: // Rectangle 1:1.5 horizontal
           rect(centreX + posX, centreY - posY - size, size*1.5, size);
+          break;
+      
+      case 15: // Rectangle 0.5:2 horizontal
+          rect(centreX + posX, centreY - posY - size/2, size*2, size/2);
           break;
 
       default:
