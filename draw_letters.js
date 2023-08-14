@@ -151,39 +151,39 @@ function drawShape(centreX, centreY, letter, posX, posY) {
           break;
 
       case 5: // Right angle triangle up
-          triangle(centreX + posX, centreY + posY, 
-                   centreX + posX, centreY + posY - size, 
-                   centreX + posX + size, centreY + posY);
+          triangle(centreX + posX, centreY - posY, 
+                centreX + posX + size/2, centreY + posY - size/2, 
+                centreX + posX + size, centreY - posY);
           break;
 
       case 6: // Right angle triangle down
-          triangle(centreX + posX, centreY + posY, 
-                   centreX + posX, centreY + posY + size, 
-                   centreX + posX + size, centreY + posY);
+          triangle(centreX + posX + size, centreY - posY - size, 
+                  centreX + posX + size/2, centreY + posY - size/2, 
+                  centreX + posX, centreY - posY - size);
           break;
 
       case 7: // Right angle triangle left
-          triangle(centreX + posX, centreY + posY, 
-                   centreX + posX - size, centreY + posY, 
-                   centreX + posX, centreY + posY + size);
+          triangle(centreX + posX + size, centreY - posY - size, 
+                centreX + posX + size/2, centreY + posY - size/2, 
+                centreX + posX + size, centreY - posY);
           break;
 
       case 8: // Right angle triangle right
           triangle(centreX + posX, centreY + posY, 
-                   centreX + posX + size, centreY + posY, 
-                   centreX + posX, centreY + posY + size);
+                   centreX + posX + size/2, centreY + posY - size/2, 
+                   centreX + posX, centreY - posY - size);
           break;
 
       case 9: // Right angle triangle bottom left corner
-          triangle(centreX + posX, centreY + posY, 
-                   centreX + posX - size, centreY + posY, 
-                   centreX + posX, centreY + posY + size);
+          triangle(centreX + posX, centreY - posY, 
+                centreX + posX , centreY + posY - size, 
+                centreX + posX + size, centreY - posY);
           break;
 
       case 10: // Right angle triangle bottom right corner
-          triangle(centreX + posX, centreY + posY, 
-                   centreX + posX + size, centreY + posY, 
-                   centreX + posX, centreY + posY + size);
+          triangle(centreX + posX, centreY - posY, 
+                centreX + posX + size , centreY + posY - size, 
+                centreX + posX + size, centreY - posY);
           break;
 
       case 11: // Semi Circle down
@@ -195,7 +195,7 @@ function drawShape(centreX, centreY, letter, posX, posY) {
           break;
 
       case 13: // Rectangle 1:2 horizontal
-          rect(centreX + posX, centreY - posY - size, size*2, size);
+          rect(centreX + posX - size, centreY - posY - size, size*2, size);
           break;
 
       case 14: // Rectangle 1:1.5 horizontal
