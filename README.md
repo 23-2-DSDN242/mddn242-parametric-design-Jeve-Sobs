@@ -2,7 +2,10 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-718a45dd9cf7e7f842a935f5ebbe5719a5e09af4491e668f4dbf3b35d5cca122.svg)](https://classroom.github.com/online_ide?assignment_repo_id=11550812&assignment_repo_type=AssignmentRepo)
 ## MDDN 242 2023 Assignment 2
 
+Inspiration Image
+
 ![plot](inspiration-font.jpg)
+
 
 My initial idea was to create something using dots, but after considering how I would implement it in a few parameters, I realised I could think of a better idea. I then started looking at fonts. Subsequently, I realised I could make any letter using 4 or less shapes. Given that we were recommended to use 12 or less parameters I tried to use 3 for each of the 4 shapes giving me 12 total. The first parameter indicates shape, size and colour, the second parameter is x position and the parameter is the y coordinate. The way I implemented the first parameter was by changing the shape every 10 integers and increasing the size and changing the colour as it increased. For each shape I had 3 sizes and 3 colours. 
 
