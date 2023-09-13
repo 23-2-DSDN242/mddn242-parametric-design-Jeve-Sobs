@@ -1,5 +1,6 @@
 /* these are optional special variables which will change the system */
-var systemBackgroundColor = "#caf0f8";
+//var systemBackgroundColor = "#caf0f8";
+var systemBackgroundColor = "#feffe3";
 var systemLineColor = "#000090";
 var systemBoxColor = "#00c800";
 
@@ -18,12 +19,10 @@ var interpPercent = 100;
  * from (0,0) to (100, 200)
  */
 function drawLetter(letterData) {
-  // color/stroke setup
-  
   stroke(strokeColor);
   strokeWeight(4);
 
-  // determine parameters for second circle
+  // set parameters 
   let shape1 = letterData["shape1"];
   let offsetX1 = letterData["offsetX1"];
   let offsetY1 = letterData["offsetY1"];
@@ -53,24 +52,19 @@ function drawLetter(letterData) {
 
 function interpolate_letter(percent, oldObj, newObj) {
   let new_letter = {};
-  //new_letter["shape1"]    = map(percent, 1, 100, oldObj["shape1"], newObj["shape1"]);
   new_letter["shape1"]    = newObj["shape1"];
   new_letter["offsetX1"] = map(percent, 0, 100, oldObj["offsetX1"], newObj["offsetX1"]);
   new_letter["offsetY1"] = map(percent, 0, 100, oldObj["offsetY1"], newObj["offsetY1"]);
-  //new_letter["shape2"]    = map(percent, 1, 100, oldObj["shape2"], newObj["shape2"]);
   new_letter["shape2"]    = newObj["shape2"];
   new_letter["offsetX2"] = map(percent, 0, 100, oldObj["offsetX2"], newObj["offsetX2"]);
   new_letter["offsetY2"] = map(percent, 0, 100, oldObj["offsetY2"], newObj["offsetY2"]);
-  //new_letter["shape3"]    = map(percent, 1, 100, oldObj["shape3"], newObj["shape3"]);
   new_letter["shape3"]    = newObj["shape3"];
   new_letter["offsetX3"] = map(percent, 0, 100, oldObj["offsetX3"], newObj["offsetX3"]);
   new_letter["offsetY3"] = map(percent, 0, 100, oldObj["offsetY3"], newObj["offsetY3"]);
-  //new_letter["shape4"]    = map(percent, 1, 100, oldObj["shape4"], newObj["shape4"]);
   new_letter["shape4"]    = newObj["shape4"];
   new_letter["offsetX4"] = map(percent, 0, 100, oldObj["offsetX4"], newObj["offsetX4"]);
   new_letter["offsetY4"] = map(percent, 0, 100, oldObj["offsetY4"], newObj["offsetY4"]);
-  //text(percent + interp,100,100);
-  
+
   interpPercent = percent;
   return new_letter;
 }
@@ -78,34 +72,56 @@ function interpolate_letter(percent, oldObj, newObj) {
 function easeInCubic(t) {
   return t * t *t * t ;
 }
+/*
+"G": {
+    "shape1": 47,
+    "offsetX1": 0,
+    "offsetY1": 0,
+    "shape2": 34,
+    "offsetX2": 23,
+    "offsetY2": 45,
+    "shape3": 35,
+    "offsetX3": 23,
+    "offsetY3": 0,
+    "shape4": 0,
+    "offsetX4": 0,
+    "offsetY4": 0
+  },
+  */
+
 
 function drawShape(centreX, centreY, letter, posX, posY) {
   let shape = splitNumber(letter);
   let sizeAndColour = getColourandSize(shape[1]);
-  let opacity = 255;
+  let opacity = 240;
   let size_CONST = 90;
+
   if( interpPercent != 100){
     //let normalizedPercent = interpPercent / 100;
     //let easedPercent = easeInCubic(normalizedPercent);
     //size_CONST = map(easedPercent, 0, 1, 1, 90);
     //opacity = map(easedPercent, 0, 1, 1, 90);
   }
+  // set colour
   switch(sizeAndColour[1]){
       case 1:
-          fill(99, 242, 255,opacity);
+          //fill(99, 242, 255,opacity);
+          fill("#7163cf");
           break;
       case 2:
-          fill(112, 110, 204,opacity);
+          //fill(112, 110, 204,opacity);
+          fill("#869fdb");
           break;
       case 3:
-          fill(230, 160, 235,opacity);
+          //fill(230, 160, 235,opacity);
+          fill("#aaf2f1");
           break;
       default:
           fill(255);
           break;
   }
   
-  
+ // set size
   let size = size_CONST;
   switch(sizeAndColour[0]){
     case 1:
@@ -176,13 +192,13 @@ function drawShape(centreX, centreY, letter, posX, posY) {
 
       case 9: // Right angle triangle bottom left corner
           triangle(centreX + posX, centreY - posY, 
-                centreX + posX , centreY + posY - size, 
+                centreX + posX , centreY - posY - size, 
                 centreX + posX + size, centreY - posY);
           break;
 
       case 10: // Right angle triangle bottom right corner
           triangle(centreX + posX, centreY - posY, 
-                centreX + posX + size , centreY + posY - size, 
+                centreX + posX + size , centreY - posY - size, 
                 centreX + posX + size, centreY - posY);
           break;
 
@@ -205,7 +221,30 @@ function drawShape(centreX, centreY, letter, posX, posY) {
       case 15: // Rectangle 0.5:2 horizontal
           rect(centreX + posX, centreY - posY - size/2, size*2, size/2);
           break;
+      case 16: // Semi Circle up
+          arc(centreX + posX, centreY - posY - size/2, size, size, PI, TWO_PI);
+          break;
+      case 17:  // Rhombas
+          let offset = 50;
+          let halfWidth = size * (1/2.5);
+          quad(
+              centreX + posX - halfWidth + offset, centreY - posY - size/2,  // top-left vertex
+              centreX + posX + halfWidth + offset, centreY - posY - size/2,  // top-right vertex
+              centreX + posX + halfWidth, centreY - posY + size/2,  // bottom-right vertex
+              centreX + posX - halfWidth, centreY - posY + size/2   // bottom-left vertex
+          );
+          break;
+      case 18: // Right angle triangle top left corner
+          triangle(centreX + posX, centreY - posY, 
+                centreX + posX , centreY - posY + size, 
+                centreX + posX + size, centreY - posY);
+          break;
 
+      case 19: // Right angle triangle top right corner
+          triangle(centreX + posX, centreY - posY, 
+                centreX + posX + size , centreY - posY + size, 
+                centreX + posX + size, centreY - posY);
+          break;
       default:
         ellipse(centreX + posX, centreY - posY - size/2, size, size);
           break;
@@ -245,7 +284,7 @@ function getColourandSize(num) {
 
 
 var swapWords = [
-  "ABBAABBA",
-  "CAB?CAB?",
-  "BAAAAAAA"
+  "TETRATXT",
+  "FABULOUS",
+  "QUANTIFY"
 ]
